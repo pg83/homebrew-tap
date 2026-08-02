@@ -2,9 +2,9 @@
 class Shitty < Formula
   desc "Fastest terminal emulator on Earth"
   homepage "https://github.com/pg83/shitty"
-  version "1"
-  url "https://github.com/pg83/shitty/releases/download/1/st-darwin-arm64.tar.gz"
-  sha256 "2db2fb6054a0a376d4b6fb4bcf380d8ebcbe71506b397f14133869edd8fc9132"
+  version "2"
+  url "https://github.com/pg83/shitty/releases/download/2/st-darwin-arm64.tar.gz"
+  sha256 "3d6d5d788f8b790ce5b7fc8d071853dc4c3d7d67bc2ec3a2e8fc2ec84a260a77"
   license any_of: ["MIT", "GPL-3.0-or-later"]
 
   depends_on :macos
