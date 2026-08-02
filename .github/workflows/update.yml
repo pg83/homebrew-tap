@@ -1,0 +1,29 @@
+name: Update formula
+
+on:
+  repository_dispatch:
+    types: [shitty-release]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: shitty release tag
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Regenerate the formula
+        run: python3 scripts/update.py "${{ github.event.client_payload.tag || inputs.tag }}"
+      - name: Commit and push
+        run: |
+          git config user.name "shitty release bot"
+          git config user.email "noreply@github.com"
+          git add Formula/shitty.rb
+          git diff --cached --quiet && exit 0
+          git commit -m "shitty ${{ github.event.client_payload.tag || inputs.tag }}"
+          git push
