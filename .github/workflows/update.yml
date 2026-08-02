@@ -1,29 +1,32 @@
-name: Update formula
+name: Reconcile formula
 
+# No cross-repo trigger exists and no cross-repo token is wanted: the
+# schedule reconciles the formula against the latest shitty release with
+# this repository's own token, so there is nothing to expire or leak.
 on:
-  repository_dispatch:
-    types: [shitty-release]
+  schedule:
+    - cron: "13,43 * * * *"
   workflow_dispatch:
     inputs:
       tag:
-        description: shitty release tag
-        required: true
+        description: shitty release tag (empty reconciles with latest)
+        required: false
 
 permissions:
   contents: write
 
 jobs:
-  update:
+  reconcile:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Regenerate the formula
-        run: python3 scripts/update.py "${{ github.event.client_payload.tag || inputs.tag }}"
+      - name: Reconcile the formula
+        run: python3 scripts/update.py ${{ inputs.tag }}
       - name: Commit and push
         run: |
           git config user.name "shitty release bot"
           git config user.email "noreply@github.com"
           git add Formula/shitty.rb
           git diff --cached --quiet && exit 0
-          git commit -m "shitty ${{ github.event.client_payload.tag || inputs.tag }}"
+          git commit -m "shitty $(sed -n 's/^  version "\([0-9]*\)"$/\1/p' Formula/shitty.rb)"
           git push
