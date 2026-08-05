@@ -1,7 +1,7 @@
-name: Reconcile formula
+name: Reconcile formulae
 
 # No cross-repo trigger exists and no cross-repo token is wanted: the
-# schedule reconciles the formula against the latest shitty release with
+# schedule reconciles the formulae against the latest shitty release with
 # this repository's own token, so there is nothing to expire or leak.
 on:
   schedule:
@@ -20,13 +20,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Reconcile the formula
+      - name: Reconcile the formulae
         run: python3 scripts/update.py ${{ inputs.tag }}
       - name: Commit and push
         run: |
           git config user.name "shitty release bot"
           git config user.email "noreply@github.com"
-          git add Formula/shitty.rb
+          git add Formula
           git diff --cached --quiet && exit 0
-          git commit -m "shitty $(sed -n 's/^  version "\([0-9]*\)"$/\1/p' Formula/shitty.rb)"
+          git commit -m "Reconcile terminal formulae"
           git push
