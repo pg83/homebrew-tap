@@ -2,9 +2,9 @@
 class Pretty < Formula
   desc "Fast terminal emulator with friendly branding"
   homepage "https://github.com/pg83/shitty"
-  version "4"
-  url "https://github.com/pg83/shitty/releases/download/4/pt-darwin-arm64.tar.gz"
-  sha256 "762b1c4e2e29240e9a521e54abc21e0faad1d3ef183f75ec98a585d18e6075a0"
+  version "6"
+  url "https://github.com/pg83/shitty/releases/download/6/pt-darwin-arm64.tar.gz"
+  sha256 "9890e124cf3e43a36e531c1d6346cc6e6d2028c04f18016faa6e82ebf0e5c88b"
   license any_of: ["MIT", "GPL-3.0-or-later"]
 
   depends_on :macos
